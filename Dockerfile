@@ -1,23 +1,23 @@
 FROM ubuntu:20.04
 
 USER root
-RUN dpkg --add-architecture i386 \
-    && apt-get update
+RUN dpkg --add-architecture i386 && \
+    ln -snf /usr/share/zoneinfo/Asi/Ho_Chi_Minh /etc/localtime && echo Asi/Ho_Chi_Minh > /etc/timezone && \
+    apt-get update  && \
+    apt-get install -y tzdata sudo vim && \
+    dpkg-reconfigure --frontend noninteractive tzdata && \
+    apt-get install -y wine wine32 --no-install-recommends && \
+    wine --version && \
+    rm -rf /var/lib/apt/lists/*  && \
+    adduser --shell /bin/bash --home /mt4 xuser && \
+    mkdir -p /mt4/output /mt4/src
 
-RUN apt-get install -y --no-install-recommends wine \
-    && wine --version
-
-
-RUN useradd -ms /bin/bash oriole \
-    && mkdir -p /home/oriole/mql4 /home/oriole/build
-USER oriole
-ENV HOME /home/oriole
-ENV WINEPREFIX /home/oriole/.wine
-ENV WINEARCH win32
-WORKDIR /home/oriole
+WORKDIR /mt4
+COPY sdk sdk
 COPY compile.sh .
-COPY mt4sdk .
 
-VOLUME [ "/home/oriole/mql4", "/home/oriole/build" ]
-ENTRYPOINT ["/bin/bash"]
-CMD ["compile.sh"]
+RUN chown -R xuser:xuser /mt4
+VOLUME [ "/mt4/source", "/mt4/output" ]
+
+USER xuser
+CMD [ "/bin/bash", "compile.sh" ]
