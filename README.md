@@ -14,6 +14,33 @@ MQL4SDK Compiler
 - the `build` folder => `/mt4/output`, which will contains the `ex4` (output) and compiling `log` files
 
 ### Compiling command
+
+#### Input: the source folder
+
 ```
-docker run --rm -v "$PWD/mql4-expert-advisors:/mt4/source" -v "$PWD/build:/mt4/output" vuthailinh/eamt4sdk-compile
+find mql4-expert-advisors/Experts -type f
+mql4-expert-advisors/Experts/FocusPanel.mq4
+
+ls mql4-expert-advisors 
+ Images        Libraries    Projects   'Shared Projects'
+ Experts       Include      Presets     Scripts
+ Files         Indicators   
+```
+#### Execute the command
+
+```
+docker run --rm -it -v "$PWD/mql4-expert-advisors:/mt4/source" -v "$PWD/build:/mt4/output" vuthailinh/eamt4sdk-compiler
+
+wine: created the configuration directory '/mt4/.wine'
+Could not find Wine Gecko. HTML rendering will be disabled.
+wine: configuration in L"/mt4/.wine" has been updated.
+output/FocusPanel.ex4
+output/FocusPanel.mq4.log
+```
+
+#### Output
+```
+find build -type f
+build/FocusPanel.ex4
+build/FocusPanel.mq4.log
 ```
