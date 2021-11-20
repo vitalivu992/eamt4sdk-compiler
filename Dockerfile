@@ -20,4 +20,4 @@ RUN chown -R xuser:xuser /mt4
 VOLUME [ "/mt4/source", "/mt4/output" ]
 
 USER xuser
-CMD [ "/bin/bash", "compile.sh" ]
+CMD [ "/bin/bash", "/mt4/compile.sh" ]
