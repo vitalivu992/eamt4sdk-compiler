@@ -2,7 +2,7 @@ FROM ubuntu:20.04
 
 USER root
 RUN dpkg --add-architecture i386 && \
-    ln -snf /usr/share/zoneinfo/Asi/Ho_Chi_Minh /etc/localtime && echo Asi/Ho_Chi_Minh > /etc/timezone && \
+    ln -snf /usr/share/zoneinfo/Etc/UTC /etc/localtime && echo Etc/UTC > /etc/timezone && \
     apt-get update  && \
     apt-get install -y tzdata sudo vim && \
     dpkg-reconfigure --frontend noninteractive tzdata && \
