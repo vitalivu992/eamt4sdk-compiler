@@ -10,7 +10,7 @@ MQL4SDK Compiler
 
 
 ### Input to run
-- Your `MQL4` folder => `/mt4/source`
+- Your `MQL4` folder => `/mt4/input`
 - the `build` folder => `/mt4/output`, which will contains the `ex4` (output) and compiling `log` files
 
 ### Compiling command
@@ -29,7 +29,7 @@ ls mql4-expert-advisors
 #### Execute the command
 
 ```
-docker run --rm -it -v "$PWD/mql4-expert-advisors:/mt4/source" -v "$PWD/build:/mt4/output" vuthailinh/eamt4sdk-compiler
+docker run --rm -it -v "$PWD/mql4-expert-advisors:/mt4/input" -v "$PWD/build:/mt4/output" vuthailinh/eamt4sdk-compiler
 
 wine: created the configuration directory '/mt4/.wine'
 Could not find Wine Gecko. HTML rendering will be disabled.
