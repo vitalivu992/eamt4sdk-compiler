@@ -4,7 +4,7 @@ echo "$#"
 if [[ $# -gt 0 ]]; then
     source=$1
 else 
-    source="source"
+    source="/mt4/input"
 fi
 
 for f in `ls $source/Experts|grep mq4|grep -v log`; do
@@ -12,6 +12,7 @@ for f in `ls $source/Experts|grep mq4|grep -v log`; do
 
     if [ $? -ne 1 ]; then # metaeditor return 1 if compiling is success
         cat /mt4/output/$f.log
+        echo "Failed when compiling EA $f"
         exit 1
     fi
 

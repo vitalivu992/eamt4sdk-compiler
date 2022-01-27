@@ -9,15 +9,13 @@ RUN dpkg --add-architecture i386 && \
     apt-get install -y wine wine32 --no-install-recommends && \
     wine --version && \
     rm -rf /var/lib/apt/lists/*  && \
-    adduser --shell /bin/bash --home /mt4 xuser && \
-    mkdir -p /mt4/output /mt4/src
-
+    useradd --shell /bin/bash --home /mt4 xuser && \
+    mkdir -p /mt4/input /mt4/output && \
+    chown -R xuser:xuser /mt4
 WORKDIR /mt4
 COPY sdk sdk
 COPY compile.sh .
-
-RUN chown -R xuser:xuser /mt4
-VOLUME [ "/mt4/source", "/mt4/output" ]
-
+RUN chmod u+x /mt4/compile.sh
+VOLUME [ "/mt4/input", "/mt4/output" ]
 USER xuser
 CMD [ "/bin/bash", "/mt4/compile.sh" ]
