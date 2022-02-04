@@ -9,20 +9,25 @@ jobs:
   docker:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
-      - uses: docker/metadata-action@v3
+      - name: Checkout
+        uses: actions/checkout@v2
+      - name: Docker meta
+        id: meta
+        uses: docker/metadata-action@v3
         with:
           images: ${{ secrets.DOCKERHUB_USERNAME }}/eamt4sdk-compiler
           tags: |
             type=raw,value={{date 'YYYY'}}
             type=raw,value={{date 'YYYY.MM'}}
             type=raw,value=latest
-      - uses: docker/login-action@v1
+      - name: Login to DockerHub
         if: github.event_name != 'pull_request'
+        uses: docker/login-action@v1
         with:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
-      - uses: docker/build-push-action@v2
+      - name: Build and push
+        uses: docker/build-push-action@v2
         with:
           context: .
           push: ${{ github.event_name != 'pull_request' }}
