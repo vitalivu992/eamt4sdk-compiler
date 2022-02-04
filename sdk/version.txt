@@ -1,4 +1,4 @@
 metaeditor.exe
 ====
-Version 5.00 build 2392
-11 Oct 2021
+Version 5.00 build 2395
+16 Dec 2021
