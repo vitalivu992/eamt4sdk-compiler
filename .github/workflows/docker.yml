@@ -16,8 +16,7 @@ jobs:
           tags: |
             type=raw,value={{date 'YYYY'}}
             type=raw,value={{date 'YYYY.MM'}}
-          flavor: |
-            latest=auto
+            type=raw,value=latest
       - uses: docker/login-action@v1
         if: github.event_name != 'pull_request'
         with:
