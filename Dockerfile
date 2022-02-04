@@ -13,7 +13,6 @@ WORKDIR /mt4
 COPY sdk sdk
 COPY compile.py .
 COPY compile.sh .
-COPY version.txt .
 RUN /usr/bin/wine --version && \
     chown -R xuser:xuser /mt4 && chmod u+x /mt4/compile.sh
 USER xuser
