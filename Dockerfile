@@ -16,6 +16,5 @@ WORKDIR /mt4
 COPY sdk sdk
 COPY compile.sh .
 RUN chmod u+x /mt4/compile.sh
-VOLUME [ "/mt4/input", "/mt4/output" ]
 USER xuser
 CMD [ "/bin/bash", "/mt4/compile.sh" ]
