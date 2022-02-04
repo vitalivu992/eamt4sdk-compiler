@@ -1,20 +1,21 @@
-FROM ubuntu:20.04
+FROM python:3.8-slim-bullseye
 
 USER root
 RUN dpkg --add-architecture i386 && \
-    ln -snf /usr/share/zoneinfo/Etc/UTC /etc/localtime && echo Etc/UTC > /etc/timezone && \
     apt-get update  && \
-    apt-get install -y tzdata sudo vim && \
-    dpkg-reconfigure --frontend noninteractive tzdata && \
-    apt-get install -y wine wine32 --no-install-recommends && \
+    apt-get install -y sudo wine wine32 libwine fonts-wine winbind --no-install-recommends && \
     wine --version && \
     rm -rf /var/lib/apt/lists/*  && \
     useradd --shell /bin/bash --home /mt4 xuser && \
-    mkdir -p /mt4/input /mt4/output && \
-    chown -R xuser:xuser /mt4
+    usermod -aG sudo xuser && \
+    mkdir -p /mt4/input /mt4/output
 WORKDIR /mt4
 COPY sdk sdk
+COPY compile.py .
 COPY compile.sh .
-RUN chmod u+x /mt4/compile.sh
+COPY version.txt .
+RUN /usr/bin/wine --version && \
+    chown -R xuser:xuser /mt4 && chmod u+x /mt4/compile.sh
 USER xuser
-CMD [ "/bin/bash", "/mt4/compile.sh" ]
+CMD [ "bash", "-ex", "compile.sh", "input" ]
+# CMD [ "python", "/mt4/compile.py" ]

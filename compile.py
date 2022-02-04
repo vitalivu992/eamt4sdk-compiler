@@ -1,0 +1,33 @@
+import os, sys
+import re
+from os import walk
+import subprocess
+
+experts = []
+for (_, _, fnames) in walk("/mt4/input/Experts"):
+    experts.extend(fnames)
+
+print("EA list:", experts)
+os.environ['WINE']='-all'
+wine_env = os.environ.copy()
+
+def run_commands(args, shell=True):
+    pipe = subprocess.Popen(args, shell=shell, stdout=subprocess.PIPE, stderr=subprocess.PIPE, env=wine_env)
+    result = pipe.communicate()
+    print("SUBPROC: CODE", pipe.returncode, "returned when executing:", args)
+    # print("SUBPROC: Result", result)
+    if pipe.returncode == 0:
+        for line in result[0].decode(encoding='utf-8').split('\n'):
+            print("SUBPROC: OUT::", line)
+    else:
+        for line in result[1].decode(encoding='utf-8').split('\n'):
+            print("SUBPROC: ERR::", line)
+    
+
+# run_commands(['wine', '--version'])
+
+
+for expert in experts:
+    with open(os.path.join("input/Experts", expert), 'r') as file:
+        print("***** Compiling EA:", file.name, "*****")
+        run_commands(['wine', '/mt4/sdk/metaeditor.exe', '/compile:'+file.name, '/include:input'])
