@@ -6,6 +6,9 @@ else
 fi
 
 rm -rf $source/Experts/*.log $source/Experts/*.ex4
+
+wine --version
+
 for f in `ls $source/Experts|grep mq4|grep -v log`; do
     echo "=============================================="
     echo "Compiling EA $f"
@@ -16,6 +19,7 @@ for f in `ls $source/Experts|grep mq4|grep -v log`; do
     fi
 done
 
+echo "=============================================="
 find $source/Experts -type f
 
 exit 0

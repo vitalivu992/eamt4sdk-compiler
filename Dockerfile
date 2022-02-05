@@ -11,10 +11,9 @@ RUN dpkg --add-architecture i386 && \
     mkdir -p /mt4/input /mt4/output
 WORKDIR /mt4
 COPY sdk sdk
-COPY compile.py .
+# COPY compile.py .
 COPY compile.sh .
-RUN /usr/bin/wine --version && \
-    chown -R xuser:xuser /mt4 && chmod u+x /mt4/compile.sh
+RUN chown -R xuser:xuser /mt4 && chmod u+x /mt4/compile.sh
 USER xuser
-CMD [ "bash", "-ex", "compile.sh", "input" ]
+CMD [ "bash", "compile.sh", "input" ]
 # CMD [ "python", "/mt4/compile.py" ]
