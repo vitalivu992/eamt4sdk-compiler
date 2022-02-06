@@ -1,1 +1,0 @@
-alias docker-build='docker build -t eamt4sdk-compiler:latest -t vuthailinh/eamt4sdk-compiler:latest .'
