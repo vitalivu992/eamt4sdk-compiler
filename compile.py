@@ -32,7 +32,7 @@ for source_dir in ["Experts", "Scripts"]:
             source_file_names.append(fname)
     for source_file_name in source_file_names:
         with open(os.path.join(sdir, source_file_name), 'r') as file:
-            print("*** Compiling: ", file.name, " ***")
+            print("*** Compiling:", file.name, "***")
             run_commands(['wine /mt4/sdk/metaeditor.exe /compile:' + file.name + ' /include:input /log:'+file.name+'.log'])
             
             if os.path.exists(file.name+'.log'): # compile success
@@ -44,3 +44,11 @@ for source_dir in ["Experts", "Scripts"]:
                             if int(words[1]) > 0:
                                 print(">>> Compile failed ", file.name)
                                 sys.exit(1)
+
+for source_dir in ["Experts", "Scripts"]:
+    source_file_names = []
+    sdir = os.path.join("input", source_dir)
+    for (root, dirs, fnames) in walk(sdir):    
+        for fname in fnames:
+            if 'ex4' in fname:
+                print("+++ Found binary", os.path.join(sdir, fname))
